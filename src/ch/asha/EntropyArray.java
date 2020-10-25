@@ -97,7 +97,14 @@ class Main {
         System.out.println("Done.");
         System.out.println("======================================================");
 
-        System.out.println(fileCharactersCount);
+        System.out.println("fileCharactersCount: "+fileCharactersCount);
+        System.out.println("filesymbolcount: " + fileSymbolCount);
+        System.out.println("fileEntropy: " + fileEntropy);
+        for(int i=0; i < chars.length; i++) {
+            if( chars[i] > 0)
+                System.out.println(i + " - " + chars[i]);
+        }
+
     }
 
 
@@ -156,7 +163,14 @@ class Main {
             // Fancy for-Loop von Java; Alternative siehe unten
             fileSymbolCount++;
         }
-        fileEntropy = (fileSymbolCount/fileCharactersCount)*(1/(Math.log(fileSymbolCount/fileCharactersCount) / Math.log(2)));
+        for(int i=0; i<chars.length;i++){
+            if (chars[i] > 0) {
+                //System.out.println((chars[i]/fileCharactersCount)*(1/(Math.log(chars[i]/fileCharactersCount)/Math.log(2))));
+                fileEntropy = (double)(chars[i]/(double)fileCharactersCount)*(Math.log(1.0/((double)chars[i]/(double)fileCharactersCount)/Math.log(2.0)));
+            }
+
+        }
+
 
     }
     // --------------------------------------------------------------------
@@ -206,12 +220,13 @@ class Main {
             /*
              * ToDo: Wahrscheinlichkeit des Symbols bestimmen
              * */
-            double p = (fileSymbolCount/fileCharactersCount);
+            double p;
+            p = ( (double)chars[c]/(double)fileCharactersCount);
 
             /*
              * ToDo: Informationsgehalt des Symbols bestimmen
              * */
-            double i = 1/((Math.log(p)/Math.log(2)));
+            double i = Math.log(1/p)/Math.log(2.0);
 
             System.out.format("  %5s : o=%8d  p=%14.10f  i=%14.10f%n",
                     chr, chars[c], p, i);
